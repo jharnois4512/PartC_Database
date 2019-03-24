@@ -73,19 +73,19 @@ public class Entry {
     }
 
     public int getYcoord() {
-        return ycoord.get();
+        return ycoordProperty().get();
     }
 
     public String getFloor() {
-        return floor.get();
+        return floorProperty().get();
     }
 
     public String getBuilding() {
-        return building.get();
+        return buildingProperty().get();
     }
 
     public String getNodeType() {
-        return nodeType.get();
+        return nodeTypeProperty().get();
     }
 
     public String getLongName() {
@@ -93,7 +93,7 @@ public class Entry {
     }
 
     public String getShortName() {
-        return shortName.get();
+        return shortNameProperty().get();
     }
 
     public void setNodeid(String nodeid) {
@@ -105,19 +105,19 @@ public class Entry {
     }
 
     public void setYcoord(int ycoord) {
-        this.ycoord.set(ycoord);
+        this.ycoordProperty().set(ycoord);
     }
 
     public void setFloor(String floor) {
-        this.floor.set(floor);
+        this.floorProperty().set(floor);
     }
 
     public void setBuilding(String building) {
-        this.building.set(building);
+        this.buildingProperty().set(building);
     }
 
     public void setNodeType(String nodeType) {
-        this.nodeType.set(nodeType);
+        this.nodeTypeProperty().set(nodeType);
     }
 
     public void setLongName(String longName) {
@@ -125,7 +125,7 @@ public class Entry {
     }
 
     public void setShortName(String shortName) {
-        this.shortName.set(shortName);
+        this.shortNameProperty().set(shortName);
     }
 
 

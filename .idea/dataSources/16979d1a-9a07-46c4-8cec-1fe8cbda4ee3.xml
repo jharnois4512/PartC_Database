@@ -46,18 +46,18 @@
     </column>
     <column id="20" parent="13" name="LONGNAME">
       <Position>7</Position>
-      <DataType>VARCHAR(100)|12s</DataType>
+      <DataType>VARCHAR(40)|12s</DataType>
     </column>
     <column id="21" parent="13" name="SHORTNAME">
       <Position>8</Position>
       <DataType>VARCHAR(20)|12s</DataType>
     </column>
-    <index id="22" parent="13" name="SQL190323154907410">
+    <index id="22" parent="13" name="SQL190324211830490">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>NODEID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="23" parent="13" name="SQL190323154907410">
+    <key id="23" parent="13" name="SQL190324211830490">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>NODEID</ColNames>
       <Primary>1</Primary>
