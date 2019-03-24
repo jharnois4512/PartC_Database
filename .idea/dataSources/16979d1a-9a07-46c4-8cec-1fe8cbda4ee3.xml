@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="myDB">
+  <database-model serializer="dbm" dbms="DERBY" family-id="DERBY" format-version="4.14">
+    <root id="1">
+      <ServerVersion>10.14.1.0</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="APP">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="NULLID"/>
+    <schema id="4" parent="1" name="SQLJ"/>
+    <schema id="5" parent="1" name="SYS"/>
+    <schema id="6" parent="1" name="SYSCAT"/>
+    <schema id="7" parent="1" name="SYSCS_DIAG"/>
+    <schema id="8" parent="1" name="SYSCS_UTIL"/>
+    <schema id="9" parent="1" name="SYSFUN"/>
+    <schema id="10" parent="1" name="SYSIBM"/>
+    <schema id="11" parent="1" name="SYSPROC"/>
+    <schema id="12" parent="1" name="SYSSTAT"/>
+    <table id="13" parent="2" name="SOFTENG_PARTC"/>
+    <column id="14" parent="13" name="NODEID">
+      <Position>1</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="15" parent="13" name="XCOORD">
+      <Position>2</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="16" parent="13" name="YCOORD">
+      <Position>3</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="17" parent="13" name="FLOOR">
+      <Position>4</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="18" parent="13" name="BUILDING">
+      <Position>5</Position>
+      <DataType>VARCHAR(15)|12s</DataType>
+    </column>
+    <column id="19" parent="13" name="NODETYPE">
+      <Position>6</Position>
+      <DataType>VARCHAR(4)|12s</DataType>
+    </column>
+    <column id="20" parent="13" name="LONGNAME">
+      <Position>7</Position>
+      <DataType>VARCHAR(100)|12s</DataType>
+    </column>
+    <column id="21" parent="13" name="SHORTNAME">
+      <Position>8</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <index id="22" parent="13" name="SQL190323154907410">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NODEID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="23" parent="13" name="SQL190323154907410">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NODEID</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
