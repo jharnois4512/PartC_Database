@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 
@@ -34,9 +35,6 @@ public class Controller implements Initializable {
 
     @FXML
     private Button submitbutton;
-
-    @FXML
-    private Button showAllBtn;
 
     @FXML
     private TableColumn<Entry, String> colEntID;
@@ -77,10 +75,7 @@ public class Controller implements Initializable {
             stage = (Stage) exportbutton1.getScene().getWindow();
 
             root = FXMLLoader.load(getClass().getResource("ExportScreen.fxml"));
-        }
-
-
-        else if  (event.getSource() == gobackbtn) {
+        } else if (event.getSource() == gobackbtn) {
             // get reference to the button
             stage = (Stage) gobackbtn.getScene().getWindow();
 
@@ -88,23 +83,17 @@ public class Controller implements Initializable {
         }
 
         //Set up modify button on the home screen
-        else if  (event.getSource() == modifybutton1) {
+        else if (event.getSource() == modifybutton1) {
             // get reference to the button
             stage = (Stage) modifybutton1.getScene().getWindow();
 
             root = FXMLLoader.load(getClass().getResource("ModifyScreen.fxml"));
-        }
-
-
-        else if  (event.getSource() == searchbutton1) {
+        } else if (event.getSource() == searchbutton1) {
             // get reference to the button
             stage = (Stage) searchbutton1.getScene().getWindow();
 
             root = FXMLLoader.load(getClass().getResource("SearchScreen_.fxml"));
-        }
-
-
-        else if  (event.getSource() == submitbutton) {
+        } else if (event.getSource() == submitbutton) {
             // get reference to the button
             stage = (Stage) submitbutton.getScene().getWindow();
 
@@ -118,31 +107,47 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        colEntID.setCellValueFactory(cellData -> cellData.getValue().nodeidProperty());
-        colXCoord.setCellValueFactory(cellData -> cellData.getValue().getNodeid());
+
+        try {
+            ObservableList<Entry> entList = getAllRecords();
+            colEntID.setCellValueFactory(new PropertyValueFactory<>("nodeid"));
+            colXCoord.setCellValueFactory(new PropertyValueFactory<>("xcoord"));
+            colYCoord.setCellValueFactory(new PropertyValueFactory<>("ycoord"));
+            colFloor.setCellValueFactory(new PropertyValueFactory<>("floor"));
+            colBuilding.setCellValueFactory(new PropertyValueFactory<>("building"));
+            colNodeType.setCellValueFactory(new PropertyValueFactory<>("nodetype"));
+            colLongName.setCellValueFactory(new PropertyValueFactory<>("longname"));
+            colShortName.setCellValueFactory(new PropertyValueFactory<>("shortname"));
+            entryTable.setItems(entList);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
     public static ObservableList<Entry> getAllRecords() throws ClassNotFoundException, SQLException {
-        String query = "SELECT * FROM SOFTENG_PARTC";
-        try{
+        String query = "SELECT * FROM ADMIN.SOFTENG_PARTC";
+        try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             ObservableList<Entry> entryList = getEntryObjects(rs);
             return entryList;
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error while trying to fetch all records");
             e.printStackTrace();
             throw e;
         }
     }
 
-    private static ObservableList<Entry> getEntryObjects(ResultSet rs) throws ClassNotFoundException, SQLException{
+    private static ObservableList<Entry> getEntryObjects(ResultSet rs) throws SQLException {
         ObservableList<Entry> entList = FXCollections.observableArrayList();
-        try{
-            while(rs.next()){
+        try {
+            while (rs.next()) {
                 Entry ent = new Entry();
                 ent.setNodeid(rs.getString("nodeid"));
                 ent.setXcoord(rs.getInt("xcoord"));
@@ -155,8 +160,7 @@ public class Controller implements Initializable {
                 entList.add(ent);
             }
             return entList;
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error while trying to fetch all records");
             e.printStackTrace();
             throw e;
