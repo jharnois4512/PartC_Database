@@ -24,7 +24,7 @@ import java.io.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
     // initialize all elements used in scene builder
@@ -78,6 +78,9 @@ public class Controller implements Initializable {
     private Button gobackbtn;
 
     @FXML
+    private Button backFromExc;
+
+    @FXML
     private Button searchbutton1;
 
     @FXML
@@ -85,6 +88,9 @@ public class Controller implements Initializable {
 
     @FXML
     private Button submitbutton;
+
+    @FXML
+    private Button populateButton;
 
     @FXML
     private TableColumn<Entry, String> colEntID = new TableColumn<Entry, String>("nodeid");
@@ -141,7 +147,7 @@ public class Controller implements Initializable {
     private TextField txtshortname = new TextField();
 
     @FXML
-    private void handleButtonAction(ActionEvent event) throws IOException {
+    private void handleButtonAction(ActionEvent event) throws IOException, SQLException, ClassNotFoundException{
 
         Stage stage = new Stage();
         Parent root = null;
@@ -171,15 +177,107 @@ public class Controller implements Initializable {
 
             root = FXMLLoader.load(getClass().getResource("SearchScreen_.fxml"));
         }
-//        else if (event.getSource() == submitbutton) {
-//            // get reference to the button
-//            stage = (Stage) submitbutton.getScene().getWindow();
-//
-//            root = FXMLLoader.load(getClass().getResource("Modify2.fxml"));
-//        }
+       else if (event.getSource() == backFromExc) {
+             //get reference to the button
+
+            stage = (Stage) backFromExc.getScene().getWindow();
+
+            root = FXMLLoader.load(getClass().getResource("ModifyScreen.fxml"));
+        }
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+
+    }
+
+    public void populate() throws SQLException, ClassNotFoundException {
+
+        String sqlQuery = "delete from SOFTENG_PARTC where FLOOR is not null";
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+            Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            System.out.println("Error while trying to fetch all records");
+            e.printStackTrace();
+            throw e;
+        }
+
+        System.out.println("-------Embedded Java DB Connection Testing --------");
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Java DB Driver not found. Add the classpath to your module.");
+            System.out.println("For IntelliJ do the following:");
+            System.out.println("File | Project Structure, Modules, Dependency tab");
+            System.out.println("Add by clicking on the green plus icon on the right of the window");
+            System.out.println("Select JARs or directories. Go to the folder where the Java JDK is installed");
+            System.out.println("Select the folder java/jdk1.8.xxx/db/lib where xxx is the version.");
+            System.out.println("Click OK, compile the code and run it.");
+            e.printStackTrace();
+            return;
+        }
+
+        System.out.println("Java DB driver registered!");
+
+
+        //  try {
+        // substitute your database name for myDB
+        //Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
+        File file = new File(Populate.class.getResource("/resources/PrototypeNodes.csv").getPath());
+
+
+        List<List<String>> lines = new ArrayList<>();
+        Scanner inputStream;
+
+        try {
+            inputStream = new Scanner(file);
+            while (inputStream.hasNext()) {
+                String line = inputStream.nextLine();
+                String[] values = line.split(",");
+                lines.add(Arrays.asList(values));
+            }
+            inputStream.close();
+        } catch (Exception q) {
+            q.printStackTrace();
+        }
+
+        try {
+            int lineNum = 1;
+            for (List<String> line : lines) {
+                Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+                Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
+                String query = "insert into SoftEng_PartC (nodeid, xcoord, ycoord, floor, building, nodetype, longname, shortname) values (?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement preStmt = conn.prepareStatement(query);
+                for (int columnNum = 0; columnNum < 8; columnNum++) {
+                    if (lineNum != 1) {
+                        if (columnNum == 1 || columnNum == 2 || columnNum == 3) {
+                            preStmt.setInt(columnNum + 1, Integer.parseInt(line.get(columnNum)));
+                        } else if (columnNum == 0 || columnNum == 4 || columnNum == 5 || columnNum == 6) {
+                            preStmt.setString(columnNum + 1, line.get(columnNum));
+                        } else if (columnNum == 7) {
+                            preStmt.setString(columnNum + 1, line.get(columnNum));
+                            preStmt.executeUpdate();
+                            conn.close();
+                        }
+                    } else {
+                        conn.close();
+                    }
+                }
+                lineNum++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //conn.close();
+
+      /* } catch (SQLException e) {
+            System.out.println("Connection failed. Check output console.");
+            e.printStackTrace();
+            return;
+        }*/
+        System.out.println("Java DB connection established!");
 
     }
 
@@ -344,10 +442,11 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void updateNback(ActionEvent event){
+    public void updateNback(ActionEvent event)throws IOException{
+        Stage stage = new Stage();
+        Parent root = null;
         try{
-            Stage stage = new Stage();
-            Parent root = null;
+
             if(event.getSource() == submitbutton){
                 stage = (Stage) submitbutton.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -378,6 +477,10 @@ public class Controller implements Initializable {
             conn.close();
         }
         catch (Exception e){
+            root = FXMLLoader.load(getClass().getResource("Popupwindow.fxml"));
+            Scene scene = new Scene(root);
+            stage = (Stage) submitbutton.getScene().getWindow();
+            stage.setScene(scene);
             e.printStackTrace();
         }
 

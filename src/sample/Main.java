@@ -7,6 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.awt.image.renderable.ContextualRenderedImageFactory;
+import java.io.File;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main extends Application {
 
@@ -20,13 +26,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-//        try{
-//            Controller.getAllRecords();
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//        }
+
         launch(args);
     }
+    }
 
-}
