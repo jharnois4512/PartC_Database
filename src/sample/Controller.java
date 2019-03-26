@@ -13,8 +13,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import javafx.stage.StageStyle;
+
 import java.lang.String;
 import java.io.*;
 
@@ -25,6 +28,49 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     // initialize all elements used in scene builder
+
+    public void setRoomID(String roomID) {
+        this.roomID = roomID;
+    }
+
+    public void setXcoord(int xcoord) {
+        this.xcoord = xcoord;
+    }
+
+    public void setYcoord(int ycoord) {
+        this.ycoord = ycoord;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    public void setRoomtype(String roomtype) {
+        this.roomtype = roomtype;
+    }
+
+    public void setLongname(String longname) {
+        this.longname = longname;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
+    }
+
+    private String roomID;
+    private int xcoord;
+    private int ycoord;
+    private int floor;
+    private String building;
+    private String roomtype;
+    private String longname;
+    private String shortname;
+
+
     @FXML
     private Button exportbutton1;
 
@@ -186,7 +232,7 @@ public class Controller implements Initializable {
                 ent.setNodeid(rs.getString("nodeid"));
                 ent.setXcoord(rs.getInt("xcoord"));
                 ent.setYcoord(rs.getInt("ycoord"));
-                ent.setFloor(rs.getString("floor"));
+                ent.setFloor(rs.getInt("floor"));
                 ent.setBuilding(rs.getString("building"));
                 ent.setNodeType(rs.getString("nodetype"));
                 ent.setLongName(rs.getString("longname"));
@@ -253,9 +299,8 @@ public class Controller implements Initializable {
         while (rs.next()) {
             myEnt.setXcoord(rs.getInt("xcoord"));
             myEnt.setYcoord(rs.getInt("ycoord"));
-            myEnt.setFloor(rs.getString("floor"));
+            myEnt.setFloor(rs.getInt("floor"));
             myEnt.setBuilding(rs.getString("building"));
-            myEnt.setFloor(rs.getString("floor"));
             myEnt.setNodeType(rs.getString("nodeType"));
             myEnt.setLongName(rs.getString("longName"));
             myEnt.setShortName(rs.getString("shortName"));
@@ -268,23 +313,27 @@ public class Controller implements Initializable {
     public void updateSQL(ActionEvent event) throws SQLException, ClassNotFoundException{
         try {
             Stage stage = new Stage();
-            Parent root = null;
+            FXMLLoader loader;
             if (event.getSource() == modifybutton1) {
                 // get reference to the button
                 stage = (Stage) modifybutton1.getScene().getWindow();
-                root = FXMLLoader.load(getClass().getResource("Modify2.fxml"));
+                loader = new FXMLLoader(getClass().getResource("Modify2.fxml"));
 
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
+                Scene scene = new Scene(loader.load());
+                Controller nextCont = loader.getController();
 
                 Entry myEntry = getSingleEntry(txtnodeid.getText());
-                txtxcoord.setText(Integer.toString(myEntry.getXcoord()));
-                txtycoord.setText(Integer.toString(myEntry.getYcoord()));
-                txtfloor.setText(myEntry.getFloor());
-                txtbuilding.setText(myEntry.getBuilding());
-                txtnodetype.setText(myEntry.getNodeType());
-                txtlongname.setText(myEntry.getLongName());
-                txtshortname.setText(myEntry.getShortName());
+                nextCont.setRoomID(myEntry.getNodeid());
+                nextCont.setXcoord(myEntry.getXcoord());
+                nextCont.setYcoord(myEntry.getYcoord());
+                nextCont.setFloor(myEntry.getFloor());
+                nextCont.setBuilding(myEntry.getBuilding());
+                nextCont.setRoomtype(myEntry.getNodeType());
+                nextCont.setLongname(myEntry.getLongName());
+                nextCont.setShortname(myEntry.getShortName());
+
+
+                stage.setScene(scene);
             }
 
         }
@@ -303,17 +352,26 @@ public class Controller implements Initializable {
                 stage = (Stage) submitbutton.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("sample.fxml"));
             }
+//            txtxcoord.setText(Integer.toString(xcoord));
+//            txtycoord.setText(Integer.toString(ycoord));
+//            txtfloor.setText(Integer.toString(floor));
+//            txtbuilding.setText(building);
+//            txtnodetype.setText(roomtype);
+//            txtlongname.setText(longname);
+//            txtshortname.setText(shortname);
+
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
             PreparedStatement stmt = conn.prepareStatement("update SOFTENG_PARTC set xcoord = ?, ycoord = ?, floor = ?, building = ?, nodetype = ?, longname = ?, shortname = ? where nodeid = ?");
             stmt.setInt(1, Integer.parseInt(txtxcoord.getText()));
             stmt.setInt(2, Integer.parseInt(txtycoord.getText()));
-            stmt.setString(3, txtfloor.getText());
+            stmt.setInt(3, Integer.parseInt(txtfloor.getText()));
             stmt.setString(4, txtbuilding.getText());
             stmt.setString(5, txtnodetype.getText());
             stmt.setString(6, txtlongname.getText());
             stmt.setString(7, txtshortname.getText());
             stmt.setString(8, txtnodeid.getText());
+            stmt.setString(8, roomID);
             stmt.execute();
             Scene scene = new Scene(root);
             stage.setScene(scene);

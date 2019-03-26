@@ -33,7 +33,8 @@ public class Populate{
         //  try {
         // substitute your database name for myDB
         //Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
-        File file = new File("/Users/JeffHarnois/Downloads/PrototypeNodes.csv");
+        File file = new File(Populate.class.getResource("/resources/PrototypeNodes.csv").getPath());
+
 
         List<List<String>> lines = new ArrayList<>();
         Scanner inputStream;

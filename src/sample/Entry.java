@@ -11,7 +11,7 @@ public class Entry {
     private StringProperty nodeid;
     private IntegerProperty xcoord;
     private IntegerProperty ycoord;
-    private StringProperty floor;
+    private IntegerProperty floor;
     private StringProperty building;
     private StringProperty nodeType;
     private StringProperty longName;
@@ -21,7 +21,7 @@ public class Entry {
         this.nodeid = new SimpleStringProperty();
         this.xcoord = new SimpleIntegerProperty();
         this.ycoord = new SimpleIntegerProperty();
-        this.floor = new SimpleStringProperty();
+        this.floor = new SimpleIntegerProperty();
         this.building = new SimpleStringProperty();
         this.nodeType = new SimpleStringProperty();
         this.longName = new SimpleStringProperty();
@@ -41,7 +41,7 @@ public class Entry {
         return ycoord;
     }
 
-    public StringProperty floorProperty() {
+    public IntegerProperty floorProperty() {
         return floor;
     }
 
@@ -73,7 +73,7 @@ public class Entry {
         return ycoordProperty().get();
     }
 
-    public String getFloor() {
+    public int getFloor() {
         return floorProperty().get();
     }
 
@@ -105,7 +105,7 @@ public class Entry {
         this.ycoordProperty().set(ycoord);
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(int floor) {
         this.floorProperty().set(floor);
     }
 

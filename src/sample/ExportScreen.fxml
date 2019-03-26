@@ -18,7 +18,7 @@
       <Button fx:id="csvExport" layoutX="154.0" layoutY="339.0" mnemonicParsing="false" onAction="#exportToCsv" prefHeight="27.0" prefWidth="293.0" text="Export as a csv " />
       <ImageView fitHeight="173.0" fitWidth="211.0" layoutX="214.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="file:/Users/JeffHarnois/Downloads/export-csv.png" />
+            <Image url="@../resources/export-csv.png" />
          </image>
       </ImageView>
    </children>
