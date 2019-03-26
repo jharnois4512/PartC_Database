@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import java.lang.String;
@@ -39,6 +40,9 @@ public class Controller implements Initializable {
 
     @FXML
     private Button submitbutton;
+
+    @FXML
+    private Button backfromexep;
 
     @FXML
     private TableColumn<Entry, String> colEntID = new TableColumn<Entry, String>("nodeid");
@@ -125,12 +129,12 @@ public class Controller implements Initializable {
 
             root = FXMLLoader.load(getClass().getResource("SearchScreen_.fxml"));
         }
-//        else if (event.getSource() == submitbutton) {
-//            // get reference to the button
-//            stage = (Stage) submitbutton.getScene().getWindow();
-//
-//            root = FXMLLoader.load(getClass().getResource("Modify2.fxml"));
-//        }
+        else if (event.getSource() == backfromexep) {
+            // get reference to the button
+            stage = (Stage) backfromexep.getScene().getWindow();
+
+            root = FXMLLoader.load(getClass().getResource("ModifyScreen.fxml"));
+        }
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -265,10 +269,11 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void updateSQL(ActionEvent event) throws SQLException, ClassNotFoundException{
+    public void updateSQL(ActionEvent event) throws SQLException, ClassNotFoundException,IOException{
+        Stage stage = new Stage();
+        Parent root = null;
         try {
-            Stage stage = new Stage();
-            Parent root = null;
+
             if (event.getSource() == modifybutton1) {
                 // get reference to the button
                 stage = (Stage) modifybutton1.getScene().getWindow();
@@ -290,15 +295,19 @@ public class Controller implements Initializable {
         }
         catch (Exception e){
             e.printStackTrace();
+
+
+
         }
 
     }
 
     @FXML
-    public void updateNback(ActionEvent event){
+    public void updateNback(ActionEvent event)throws IOException{
+        Stage stage = new Stage();
+        Parent root = null;
         try{
-            Stage stage = new Stage();
-            Parent root = null;
+
             if(event.getSource() == submitbutton){
                 stage = (Stage) submitbutton.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -321,6 +330,15 @@ public class Controller implements Initializable {
         }
         catch (Exception e){
             e.printStackTrace();
+            System.out.println("catch the exception");
+            root = FXMLLoader.load(getClass().getResource("Popup.fxml"));
+            Scene scene = new Scene(root);
+            stage = (Stage) submitbutton.getScene().getWindow();
+            stage.setScene(scene);
+            System.out.println("change screen ");
+
+
+
         }
 
     }
