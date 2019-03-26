@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.lang.String;
 
 public class Populate{
-    public static void populate(String[] args) {
+    public static void main(String[] args) {
         System.out.println("-------Embedded Java DB Connection Testing --------");
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -33,7 +33,7 @@ public class Populate{
         //  try {
         // substitute your database name for myDB
         //Connection conn = DriverManager.getConnection("jdbc:derby:myDB;create=true");
-        File file = new File("/Users/josephcybulzebede/Downloads/PrototypeNodes.csv");
+        File file = new File("/Users/JeffHarnois/Downloads/PrototypeNodes.csv");
 
         List<List<String>> lines = new ArrayList<>();
         Scanner inputStream;
@@ -100,7 +100,7 @@ CREATE TABLE SOFTENG_PARTC
     FLOOR int,
     BUILDING varchar(15),
     NODETYPE varchar(4),
-    LONGNAME varchar(40),
+    LONGNAME varchar(100),
     SHORTNAME varchar(20)
 );
 CREATE UNIQUE INDEX SQL190323122638210 ON SOFTENG_PARTC (NODEID);

@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Sun Mar 24 16:11:04 EDT 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0169-b153-f875-00000e0fede8 
-on database directory /Users/JeffHarnois/IdeaProjects/Database_C/myDB with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Mon Mar 25 20:40:52 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0169-b771-57c3-00000c9dadf8 
+on database directory /Users/JeffHarnois/IdeaProjects/PartC_Database/myDB with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/Users/JeffHarnois/Desktop/SoftEng/derby/10.14.2.0/libexec/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_201-b09
-user.dir=/Users/JeffHarnois/IdeaProjects/Database_C
+user.dir=/Users/JeffHarnois/IdeaProjects/PartC_Database
 os.name=Mac OS X
 os.arch=x86_64
 os.version=10.12.6

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.image.renderable.ContextualRenderedImageFactory;
+
 public class Main extends Application {
 
     @Override
@@ -18,6 +20,12 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+//        try{
+//            Controller.getAllRecords();
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
         launch(args);
     }
 
